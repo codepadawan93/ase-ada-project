@@ -1,5 +1,6 @@
 # College project for ADA (Algorithmic data analysis)
 ## Specifications
+A set of classes used for Algorithmic data analysis and visualisation
 
 ## Components
 ### PCA - Principal Components Analysis class
@@ -23,6 +24,12 @@ pca.get_principal_components()
 ```
 
 ## Notes
+### Dependencies
+- Python 3+
+- pandas
+- numpy
+- matplotlib
+- seaborn
 
 ## Author
 - Kovacs Erik-Robert
