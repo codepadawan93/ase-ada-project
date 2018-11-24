@@ -5,7 +5,7 @@
 ### PCA - Principal Components Analysis class
 - Used to decompose an initial value matrix into its principal components. Example usage:
 ```python
-# Read input data from csv file
+# Read input data from csv file using pandas
 table = pd.read_csv("./resources/Teritorial.csv", index_col=1)
 
 # Bring the table data into a numpy matrix (ndarray)
