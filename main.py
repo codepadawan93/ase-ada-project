@@ -1,6 +1,7 @@
 # Driver for testing the PCA library based on prof. Vinte's model.
 import pandas as pd
 from library import pca as pc
+from library import datalysis as dl
 
 # Read input data from csv file
 table = pd.read_csv("./resources/Teritorial.csv", index_col=1)
@@ -26,4 +27,9 @@ C = pca.get_principal_components()
 print(R)
 print("Eigenvalues: ", alpha)
 print("Eigenvectors: ", a)
+
+# Test datalysis class...
+analyser = dl.Datalysis()
+analyser.read_file("./resources/Teritorial.csv", 1)
+
 
