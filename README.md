@@ -1,38 +1,60 @@
 # College project for ADA (Algorithmic data analysis)
 ## Specifications
 A set of classes used for Algorithmic data analysis and visualisation
-- Sa facem un class hierarchy for implementing all the 6 analysis studied:
-  - pca
-  - factor analysis
-  - canonical correlation 
-  - discriminant analysis
-  - cluster analysis 
-  - correspondence analysis
-- l-am rugat sa publice si cum va puncta proiectul
-- a spus că va tine cont de interfata, cât de ușor de folosit va fi 
-- rezultatele trebuie sa fie usor de accesat, sa avem o reprezentare vizuală a outputului 
-- pe scurt, trebuie sa facem noi un package pt altii, sa fie usor de folosit 
 
-## Components
-### PCA - Principal Components Analysis class
-- Used to decompose an initial value matrix into its principal components. Example usage:
+## Requirements
+- Build a class hierarchy for implementing all the 6 analysis studied:
+  - PCA
+  - Factor Analysis
+  - Canonical Correlation 
+  - Discriminant Analysis
+  - Cluster Analysis 
+  - Correspondence Analysis
+- I asked him to publish and how he would evaluate the project
+- Prof. said he would take into account the interface, its ease of use
+- The results must be easy to access, and it must be capable of rendering a visual representation of the output
+- In short, we need to make a library for others focused on ease of use
+
+## Datalysis
+### Easy to use API for running all available methods
+Conclusions can be output to a file:
 ```python
-# Read input data from csv file using pandas
-table = pd.read_csv("./resources/Teritorial.csv", index_col=1)
+from library import datalysis as dat
 
-# Bring the table data into a numpy matrix (ndarray)
-X = table.iloc[:, 1:].values
-
-# Instantiate a PCA object
-pca = pc.PCA(X)
-
-# Obtain the principal components or intermediate values depending on needs. The following methods are avaliable:
-pca.get_correlation()
-pca.get_eigenvalues()
-pca.get_eigenvectors()
-pca.get_correlation_factors()
-pca.get_principal_components()
+analyser = dat.Datalysis()
+analyser \ 
+    .read_file('./resources/CoolData.csv', index_col=1) \
+    .run_all() \
+    .put_report('./output/MyReport.txt')
 ```
+or visualised directly at runtime :
+```python
+analyser \ 
+    .read_file('./resources/CoolData.csv', index_col=1) \
+    .run_all() \
+    .visualise()
+```
+
+### PCA - Principal Components Analysis class
+Used to decompose an initial value matrix into its principal components. Example usage:
+```python
+results = analyser \ 
+    .read_file('./resources/CoolData.csv', index_col=1) \
+    .run_pca() \
+    .results
+```
+
+### EFA - Exploratory Factor Analysis class
+Used to find underlying factors in the data that were not measured directly. Example usage:
+```python
+results = analyser \ 
+    .read_file('./resources/CoolData.csv', index_col=1) \
+    .run_efa() \
+    .results
+```
+
+### CCA - Canonical Correlation Analysis class
+- Not yet implemented
 
 ## Notes
 ### Dependencies
@@ -40,6 +62,7 @@ pca.get_principal_components()
 - pandas
 - numpy
 - matplotlib
+- factor-analyzer
 - seaborn
 
 ## Author
