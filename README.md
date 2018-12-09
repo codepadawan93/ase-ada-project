@@ -16,6 +16,16 @@ A set of classes used for Algorithmic data analysis and visualisation
 - In short, we need to make a library for others focused on ease of use
 
 ## Datalysis
+### Installation
+Clone this project, create a new virtual env, install dependencies and start yours around it:
+```bash
+git clone 
+pip install pipenv
+pip install requirements.txt
+
+code main.py 
+```
+
 ### Easy to use API for running all available methods
 Conclusions can be output to a file:
 ```python

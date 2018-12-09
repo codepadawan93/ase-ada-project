@@ -13,7 +13,7 @@ correspondence analysis and data visualisation.
 '''
 
 # Tag to identify where errors came from
-TAG = "Datalysis"
+TAG = "package:Datalysis"
 
 class Datalysis:
 
