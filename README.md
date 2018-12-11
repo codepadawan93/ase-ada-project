@@ -20,7 +20,6 @@ A set of classes used for Algorithmic data analysis and visualisation
 Clone this project, create a new virtual env, install dependencies and start yours around it:
 ```bash
 git clone https://github.com/codepadawan93/ase-ada-project.git .
-pip install pipenv
 pip install requirements.txt
 
 code main.py 
