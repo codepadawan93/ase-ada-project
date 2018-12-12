@@ -5,4 +5,5 @@
 
 class CCA:
     def __init__(self):
+        # imi place kurtos
         pass
