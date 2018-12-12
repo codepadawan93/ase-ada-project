@@ -45,6 +45,15 @@ class EFA:
         self.bartlett_test_results = fa.calculate_bartlett_sphericity(self.t)
         return self
 
+    def bartlett_wilks(self, r, n, p, q, m):
+        self.r_inv = np.flipud(r)
+        l = np.flipud(np.cumprod(1 - self.r_inv * r))
+        dof = (p - np.arange(m)) * (q - np.arange(m))
+        chi2_computed = (-n + 1 + (p + q + 1) / 2) * np.log(l)
+        # TODO:: uncomment and fix
+        # chi2_estimated = 1 - sts.chi2.cdf(chi2_computed, dof)
+        # return chi2_computed, chi2_estimated
+
     # KMO test - Kaiser, Meyer, Olkin Measure Of Sampling Adequacy
     def kmo(self, threshold=0.5):
         self.kmo = fa.calculate_kmo(self.t)
