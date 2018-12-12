@@ -67,11 +67,13 @@ results = analyser \
 
 ## Notes
 ### Dependencies
-- Python 3+
-- pandas
+- Python 3.7+
 - numpy
-- matplotlib
+- scipy
+- pandas
 - factor-analyzer
+- sklearn
+- matplotlib
 - seaborn
 
 ## Author

@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 '''
     Utility methods go here. All are static
@@ -44,5 +45,9 @@ class Utils:
         stds = np.std(X, axis=0)
         Xstd = (X - avgs) / stds
         return Xstd
+
+    @staticmethod
+    def get_data_frame(matrix, index, cols):
+        return pd.DataFrame(matrix, index=index, columns=cols)
 
 
