@@ -2,6 +2,9 @@ import pandas as pd
 from . import utils as u
 from . import pca
 from . import efa
+from . import cca
+from . import hca
+from . import lda
 
 '''
 Main wrapper for the library functionality
@@ -26,9 +29,8 @@ class Datalysis:
         self.pca_module = None
         self.efa_module = None
         self.cca_module = None
-        self.discr_module = None
-        self.cluster_module = None
-        self.corresp_module = None
+        self.hca_module = None
+        self.lda_module = None
 
     # Reads a pandas dataframe into memory from a csv file
     def read_file(self, filename, index_col):
@@ -54,6 +56,18 @@ class Datalysis:
     # Perform EFA on data using the EFA class
     def run_efa(self):
         self.efa_module = efa.EFA(self.data_frame)
+        return self
+
+    def run_cca(self):
+        self.cca_module = cca.CCA(self.data_frame)
+        return self
+
+    def run_hca(self):
+        self.hca_module = hca.HCA(self.data_frame)
+        return self
+
+    def run_lda(self):
+        self.lda_module = lda.LDA(self.data_frame)
         return self
 
     # Writes a SPSS-style report in plain text at the specified location,

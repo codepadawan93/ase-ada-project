@@ -11,10 +11,10 @@ from . import efa
 class CCA:
     def __init__(self, x_data, y_data):
         self.x_data, self.y_data = x_data, y_data
-        self.model, self.x_scores, self.y_scores, self._raw_correlations, self.correlations, self.m, self.n, self.p, self.q, self.n = None
+        self.model = self.x_scores = self.y_scores = self._raw_correlations = self.correlations = self.m = self.n = self.p = self.q = self.n = None
 
     def _reset(self):
-        self.model, self.x_scores, self.y_scores, self._raw_correlations, self.correlations, self.m, self.n, self.p, self.q, self.n = None
+        self.model = self.x_scores = self.y_scores = self._raw_correlations = self.correlations = self.m = self.n = self.p = self.q = self.n = None
 
     # Run sklearn's CCA analysis on the arrays
     def fit(self, x_data, y_data):

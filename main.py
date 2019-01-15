@@ -32,4 +32,16 @@ print("Eigenvectors: ", a)
 analyser = dl.Datalysis()
 analyser.read_file("./resources/Teritorial.csv", 1)
 
+# Apply PCA
 
+# Apply EFA
+
+# Apply CCA
+
+# Apply LDA
+
+# Apply HCA
+
+# Apply autorun
+
+# Apply charts

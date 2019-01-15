@@ -16,11 +16,11 @@ class PCA:
     # Build object around an initial value matrix
     def __init__(self, X):
         self.X = X
-        self.R, self.eigenvalues, self.eigenvectors, self.alpha, self.a, self.R_x_c, self.C = None
+        self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.R_x_c = self.C = None
 
     # Resets the state of the PCA object
     def _reset(self):
-        self.X, self.R, self.eigenvalues, self.eigenvectors, self.alpha, self.a, self.R_x_c, self.C = None
+        self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.R_x_c = self.C = None
 
     # Performs the algorithm up to the specified point
     def _calculate(self, up_to='principal_components'):
