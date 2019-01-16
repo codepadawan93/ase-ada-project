@@ -1,4 +1,6 @@
 import numpy as np
+import pandas as pd
+from . import graphics
 
 '''
     Class for solving a Principal Components Analysis (PCA) problem
@@ -14,18 +16,24 @@ import numpy as np
 class PCA:
 
     # Build object around an initial value matrix
-    def __init__(self, X):
+    def __init__(self, X, var_name):
+        self.var_name = var_name
         self.X = X
-        self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.R_x_c = self.C = None
+        # number of observations, umber of variables
+        self.m, self.n = n = X.shape[0], X.shape[1]
+        self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.R_x_c = self.r_tab = self.rxc_tab = self.C = None
 
     # Resets the state of the PCA object
     def _reset(self):
         self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.R_x_c = self.C = None
+        return self
 
     # Performs the algorithm up to the specified point
     def _calculate(self, up_to='principal_components'):
+
         # Compute the correlation matrix and return if only that is needed
         self.R = np.corrcoef(self.X, rowvar=False)
+        self.r_tab = pd.DataFrame(data=self.R, columns=self.var_name, index=self.var_name)
 
         if up_to == 'correlation':
             return self.R
@@ -59,6 +67,8 @@ class PCA:
         if up_to == 'correlation_factors':
             return self.R_x_c
 
+        self.rxc_tab = pd.DataFrame(self.R_x_c, index=self.var_name, columns=["C"+str(i+1) for i in range(self.m)])
+
         # Compute the principal components on standardized X and return
         avg_var = np.mean(self.X, axis=0)
         std_deviation = np.std(self.X, axis=0)
@@ -74,36 +84,38 @@ class PCA:
     def setX(self, X):
         self._reset()
         self.X = X
+        return self
 
     # Return the correlation matrix of the initial (causal) variables
     def get_correlation(self):
-        return self._calculate('correlation')
+        self._calculate('correlation')
+        return self
 
     # Return the eigenvalues of the correlation matrix
     def get_eigenvalues(self):
-        return self._calculate('eigenvalues')
+        self._calculate('eigenvalues')
+        return self
 
     # Return the eigenvectors of the correlation matrix
     def get_eigenvectors(self):
-        return self._calculate('eigenvectors')
+        self._calculate('eigenvectors')
+        return self
 
     def get_correlation_factors(self):
-        return self._calculate('correlation_factors')
+        self._calculate('correlation_factors')
+        return self
 
     def get_principal_components(self):
-        return self._calculate('principal_components')
+        self._calculate('principal_components')
+        return self
 
-    def get_data(self, data='*'):
-        bundle = []
-        if data == 'correlation' or data == '*':
-            bundle.append({'correlation', self.get_correlation()})
-        elif data == 'eigenvalues' or data == '*':
-            bundle.append({'eigenvalues', self.get_eigenvalues()})
-        elif data == 'eigenvectors' or data == '*':
-            bundle.append({'eigenvectors', self.get_eigenvectors()})
-        elif data == 'correlation_factors' or data == '*':
-            bundle.append({'correlation_factors', self.get_correlation_factors()})
-        elif data == 'principal_components' or data == '*':
-            bundle.append({'principal_components', self.get_principal_components()})
+    def visualise(self):
+        if self.X == None :
+            return
 
-        return bundle
+        # Show the correlogram
+        graphics.correlogram(self.r_tab)
+
+        # Show factors correlogram
+        graphics.correlogram(self.rxc_tab, "Correlogram of the factors")
+        graphics.corrCircles(self.rxc_tab, 0, 1)

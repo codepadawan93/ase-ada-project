@@ -14,6 +14,22 @@ class Graphics:
         sb.heatmap(np.round(t, 2), cmap='bwr', vmin=valmin, vmax=valmax, annot=True)
         return self
 
+    def corrCircle(self, R, k1, k2, title="The Correlation Circles"):
+        plt.figure(title, figsize=(6, 6))
+        plt.title(title, fontsize=16, color='b', verticalalignment='bottom')
+        T = [t for t in np.arange(0, np.math.pi * 2, 0.01)]
+        X = [np.cos(t) for t in T]
+        Y = [np.sin(t) for t in T]
+        plt.plot(X, Y)
+        plt.axhline(0, color='g')
+        plt.axvline(0, color='g')
+        plt.scatter(R.iloc[:, k1], R.iloc[:, k2], c='r')
+        plt.xlabel(R.columns[k1], fontsize=12, color='r', verticalalignment='top')
+        plt.ylabel(R.columns[k2], fontsize=12, color='r', verticalalignment='bottom')
+        for i in range(len(R)):
+            plt.text(R.iloc[i, k1], R.iloc[i, k2], R.index[i])
+        return self
+
     def variance(self, alpha, title='Variance Plot'):
         n = len(alpha)
         f = plt.figure(title, figsize=(10, 7))
