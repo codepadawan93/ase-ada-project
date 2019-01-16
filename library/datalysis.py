@@ -24,7 +24,7 @@ class Datalysis:
         # Start with a clean slate
 
         self.data_frame = None
-        self.results = None
+        self.results = []
 
         self.pca_module = None
         self.efa_module = None
@@ -33,14 +33,12 @@ class Datalysis:
         self.lda_module = None
 
     # Reads a pandas dataframe into memory from a csv file
-    def read_file(self, filename, index_col=1, na_vals=':'):
+    def read_file(self, filename, index_col=0, na_vals=':'):
         table = pd.read_csv(filename, index_col=index_col, na_values=na_vals)
         self.obs_name = table.index
         self.var_name = table.columns[1:]
-        X = table[self.var_name].values
-        u.Utils.replace_na(X)
         try:
-            self.data_frame = X
+            self.data_frame = table
         except ValueError:
             u.Utils.log(TAG, ValueError)
         return self
@@ -55,24 +53,27 @@ class Datalysis:
 
     # Obtain PCA of data using the PCA class
     def run_pca(self):
-        self.results = pca.PCA(self.data_frame, self.var_name).get_principal_components()
+        self.pca_module = pca.PCA(self.data_frame, self.var_name)
+        self.results = self.pca_module.get_results()
         return self
 
     # Perform EFA on data using the EFA class
     def run_efa(self):
-        pca_results = pca.PCA(self.data_frame).get_principal_components().results
-        self.efa_module = efa.EFA(self.data_frame)
-        self.efa_module \
-            .explore(pca_results.c, pca_results.alpha, pca_results.R) \
+        R, alpha, a, rxc, C = pca.PCA(self.data_frame, self.var_name).get_results()
+        self.efa_module = efa.EFA(self.data_frame, self.obs_name, self.var_name)
+        self.efa_module.explore(C, alpha, R) \
             .bartlett_test() \
             .kmo() \
-            .analyse();
-        self.results = self.efa_module
+            .analyse()
+        self.results = self.efa_module.get_results()
         return self
 
-    def run_cca(self):
-        self.cca_module = cca.CCA(self.data_frame)
-        self.results = self.cca_module
+    # x mark, y mark the columns where we split the dataset in two
+    def run_cca(self, x_mark, y_mark):
+        self.cca_module = cca.CCA(self.data_frame, self.var_name, x_mark, y_mark)
+        self.cca_module.fit() \
+            .compute_canonical_correlations() \
+            .bartlett_wilks()
         return self
 
     def run_hca(self):
@@ -85,12 +86,21 @@ class Datalysis:
         self.results = self.lda_module
         return self
 
+    def get_results(self):
+        return self.results
+
     def visualise(self):
-        self.pca_module.visualise()
-        self.efa_module.visualise()
-        self.cca_module.visualise()
-        self.hca_module.visualise()
-        self.lda_module.visualise()
+        if(not self.pca_module is None):
+            self.pca_module.visualise().show()
+        if (not self.efa_module is None):
+            self.efa_module.visualise().show()
+        if (not self.cca_module is None):
+            self.cca_module.visualise().show()
+        if (not self.hca_module is None):
+            self.hca_module.visualise().show()
+        if (not self.lda_module is None):
+            self.lda_module.visualise().show()
+        return self
 
     # Writes a SPSS-style report in plain text at the specified location,
     # running all available tests on the provided data

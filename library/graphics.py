@@ -7,14 +7,15 @@ class Graphics:
     def __init__(self):
         pass
 
-    def correlogram(self, t, title=None, valmin=-1, valmax=1):
+    @staticmethod
+    def correlogram(t, title=None, valmin=-1, valmax=1):
         f = plt.figure(title, figsize=(8, 7))
         f1 = f.add_subplot(1, 1, 1)
         f1.set_title(title, fontsize=16, color='b', verticalalignment='bottom')
         sb.heatmap(np.round(t, 2), cmap='bwr', vmin=valmin, vmax=valmax, annot=True)
-        return self
 
-    def corrCircle(self, R, k1, k2, title="The Correlation Circles"):
+    @staticmethod
+    def corrCircle(R, k1, k2, title="The Correlation Circles"):
         plt.figure(title, figsize=(6, 6))
         plt.title(title, fontsize=16, color='b', verticalalignment='bottom')
         T = [t for t in np.arange(0, np.math.pi * 2, 0.01)]
@@ -28,9 +29,9 @@ class Graphics:
         plt.ylabel(R.columns[k2], fontsize=12, color='r', verticalalignment='bottom')
         for i in range(len(R)):
             plt.text(R.iloc[i, k1], R.iloc[i, k2], R.index[i])
-        return self
 
-    def variance(self, alpha, title='Variance Plot'):
+    @staticmethod
+    def variance(alpha, title='Variance Plot'):
         n = len(alpha)
         f = plt.figure(title, figsize=(10, 7))
         f1 = f.add_subplot(1, 1, 1)
@@ -47,7 +48,8 @@ class Graphics:
         f1.axhline(alpha[j_Cattel + 1], c='m')
         return j_Cattel + 2, j_Kaiser
 
-    def scatter(self, x, y, label=None, tx="", ty="", title='Scatterplot'):
+    @staticmethod
+    def scatter(x, y, label=None, tx="", ty="", title='Scatterplot'):
         f = plt.figure(title, figsize=(10, 7))
         f1 = f.add_subplot(1, 1, 1)
         f1.set_title(title, fontsize=16, color='b', verticalalignment='bottom')
@@ -58,9 +60,9 @@ class Graphics:
             n = len(label)
             for i in range(n):
                 f1.text(x[i], y[i], label[i])
-        return self
 
-    def t_scatter(self, x, y, x1, y1, label=None, label1=None, tx="", ty="", title='Scatterplot - Test Dataset'):
+    @staticmethod
+    def t_scatter(x, y, x1, y1, label=None, label1=None, tx="", ty="", title='Scatterplot - Test Dataset'):
         f = plt.figure(title, figsize=(10, 7))
         f1 = f.add_subplot(1, 1, 1)
         f1.set_title(title, fontsize=16, color='b', verticalalignment='bottom')
@@ -75,15 +77,14 @@ class Graphics:
                 f1.text(x[i], y[i], label[i], color='k')
             for i in range(p):
                 f1.text(x1[i], y1[i], label1[i], color='k')
-        return self
 
-    def dendrogram(self, h, labels, title='Hierarchical classification', threshold=None):
+    @staticmethod
+    def dendrogram(h, labels, title='Hierarchical classification', threshold=None):
         f = plt.figure(figsize=(12, 7))
         axis = f.add_subplot(1, 1, 1)
         axis.set_title(title, fontsize=16, color='b')
         hiclu.dendrogram(h, labels=labels, leaf_rotation=30, ax=axis, color_threshold=threshold)
-        return self
 
-    def show(self):
+    @staticmethod
+    def show():
         plt.show()
-        return self
