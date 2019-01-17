@@ -1,8 +1,7 @@
 import numpy as np
 import pandas as pd
-from . import utils as u
-from . import graphics as gr
-
+from utils.utils import Utils
+from utils.graphics import Graphics
 
 '''
     Class for solving a Principal Components Analysis (PCA) problem
@@ -16,13 +15,13 @@ from . import graphics as gr
 
 class PCA:
     def __init__(self, X, var_name):
-        self.graphics = gr.Graphics
+        self.graphics = Graphics
         self.var_name = var_name
         self.X = X[var_name].values
         print(var_name)
         self.n = X.shape[0]  # number of observation
         self.m = X.shape[1]  # number of variables
-        u.Utils.replace_na(self.X)
+        Utils.replace_na(self.X)
         self.R = self.eigenvalues = self.eigenvectors = self.alpha = self.a = self.correlation_fac = self.r_tab = self.correlation_fac_tab = self.C = None
         self.calculate()
 

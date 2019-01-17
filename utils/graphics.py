@@ -86,5 +86,29 @@ class Graphics:
         hiclu.dendrogram(h, labels=labels, leaf_rotation=30, ax=axis, color_threshold=threshold)
 
     @staticmethod
+    def scatter_discriminant(z1, z2, g, labels, zg1, zg2, labels_g):
+        f = plt.figure(figsize=(10, 7))
+        assert isinstance(f, plt.Figure)
+        ax = f.add_subplot(1, 1, 1)
+        assert isinstance(ax, plt.Axes)
+        ax.set_title("Instances and centers in z1 and z2 axes ", fontsize=14, color='b')
+        sb.scatterplot(z1, z2, g)
+        sb.scatterplot(zg1, zg2, labels_g, s=200, legend=False)
+        for i in range(len(labels)):
+            ax.text(z1[i], z2[i], labels[i])
+        for i in range(len(labels_g)):
+            ax.text(zg1[i], zg2[i], labels_g[i], fontsize=26)
+
+    @staticmethod
+    def distribution(z, y, g, axis):
+        f = plt.figure(figsize=(10, 7))
+        assert isinstance(f, plt.Figure)
+        ax = f.add_subplot(1, 1, 1)
+        assert isinstance(ax, plt.Axes)
+        ax.set_title("Group distribution. Axis " + str(axis + 1), fontsize=14, color='b')
+        for v in g:
+            sb.kdeplot(data=z[y == v], shade=True, ax=ax, label=v)
+
+    @staticmethod
     def show():
         plt.show()

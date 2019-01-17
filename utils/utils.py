@@ -108,4 +108,7 @@ class Utils:
         clusters = ['c' + str(i) for i in pd.Categorical(g).codes]
         return clusters
 
-
+    @staticmethod
+    def code(t, vars):
+        for v in vars:
+            t[v] = pd.Categorical(t[v]).codes

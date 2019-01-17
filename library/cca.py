@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import sklearn.cross_decomposition as skl
 import scipy.stats as sts
-from . import graphics as gr
+from utils.graphics import Graphics
 
 '''
     Class for Canonical Correlation Analysis
@@ -16,7 +16,7 @@ class CCA:
         self.y_columns = var_name[y_mark:]
         self.x_data = X[self.x_columns].values
         self.y_data = X[self.y_columns].values
-        self.graphics = gr.Graphics
+        self.graphics = Graphics
         # Null out everything else
         self.model = self.x_scores = self.y_scores = self.raw_correlations = self.correlations = self.m = self.n = self.p = self.q = self.n = None
 

@@ -1,5 +1,5 @@
 import pandas as pd
-from . import utils as u
+from utils.utils import Utils
 from . import pca
 from . import efa
 from . import cca
@@ -40,7 +40,12 @@ class Datalysis:
         try:
             self.data_frame = table
         except ValueError:
-            u.Utils.log(TAG, ValueError)
+            Utils.log(TAG, ValueError)
+        return self
+
+    def read_multiple(self, file1, file2, f1_index_col=0, f2_index_col=0):
+        self.t1 = pd.read_csv(file1, index_col=f1_index_col)
+        self.t2 = pd.read_csv(file2, index_col=f2_index_col)
         return self
 
     # Reads a hardcoded or already-existing pandas dataframe into memory
@@ -48,7 +53,7 @@ class Datalysis:
         try:
             self.data_frame = pd.DataFrame(data.values, data.index, data.column_labels)
         except ValueError:
-            u.log(TAG, ValueError)
+            Utils.log(TAG, ValueError)
         return self
 
     # Obtain PCA of data using the PCA class
@@ -76,14 +81,20 @@ class Datalysis:
             .bartlett_wilks()
         return self
 
-    def run_hca(self):
+    #
+    def run_hca(self, method=0, metric=0, partition_type="optimal", no_groups=None):
         self.hca_module = hca.HCA(self.data_frame)
-        self.results = self.hca_module
+        self.hca_module.classify(method, metric)
+        if partition_type == "optimal":
+            self.hca_module.optimal_partition()
+        elif partition_type == "arbitrary" and no_groups is not None:
+            self.hca_module.arbitrary_partition(no_groups)
+        self.results = self.hca_module.get_results()
         return self
 
-    def run_lda(self):
-        self.lda_module = lda.LDA(self.data_frame)
-        self.results = self.lda_module
+    def run_lda(self, categorical_mark=None, predictor_mark=None, predictor_var=None):
+        self.lda_module = lda.LDA(self.t1, self.t2, categorical_mark, predictor_mark, predictor_var)
+        self.results = self.lda_module.fit().apply().get_results()
         return self
 
     def get_results(self):

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from . import utils as u
-from . import graphics as gr
+from utils.utils import Utils
+from utils.graphics import Graphics
 import scipy.stats as sts
 import factor_analyzer as fa
 
@@ -13,10 +13,10 @@ import factor_analyzer as fa
 class EFA:
     def __init__(self, X, obs_name, var_name):
         # Null out all props - mostly to see all of them
-        Xprocessed = self.X = u.Utils.replace_na(X[var_name].values)
+        Xprocessed = self.X = Utils.replace_na(X[var_name].values)
         self.t = pd.DataFrame(Xprocessed, index=obs_name, columns=var_name)
         self.model = fa.FactorAnalyzer()
-        self.graphics = gr.Graphics
+        self.graphics = Graphics
         self.S = None
         self.q = None
         self.beta = None
