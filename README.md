@@ -47,23 +47,57 @@ analyser \
 ### PCA - Principal Components Analysis class
 Used to decompose an initial value matrix into its principal components. Example usage:
 ```python
-results = analyser \ 
-    .read_file('./resources/CoolData.csv', index_col=1) \
-    .run_pca() \
-    .results
+pca_results = dl.Datalysis()\
+    .read_file("./resources/Teritorial.csv", index_col=1)\
+    .run_pca()\
+    .visualise()\
+    .get_results()
 ```
 
 ### EFA - Exploratory Factor Analysis class
 Used to find underlying factors in the data that were not measured directly. Example usage:
 ```python
-results = analyser \ 
-    .read_file('./resources/CoolData.csv', index_col=1) \
-    .run_efa() \
-    .results
+efa_results = dl.Datalysis()\
+    .read_file("./resources/Teritorial.csv")\
+    .run_efa()\
+    .visualise()\
+    .get_results()
 ```
 
 ### CCA - Canonical Correlation Analysis class
-- Not yet implemented
+```python
+cca_results = dl.Datalysis()\
+    .read_file("./resources/Energy.csv", index_col=0)\
+    .run_cca(x_mark=4, y_mark=4)\
+    .visualise()\
+    .get_results()
+```
+
+### LDA - Linear Discriminant Analysis class
+```python
+lda_results = dl.Datalysis()\
+    .read_multiple("./resources/ProiectB.csv", "./resources/ProiectBEstimare.csv", f1_index_col=0, f2_index_col=0)\
+    .run_lda(categorical_mark=6, predictor_mark=11, predictor_var="VULNERAB")\
+    .visualise()\
+    .get_results()
+```
+
+### HCA - Hierarchical Cluster Analysis class
+```python
+hca_results = dl.Datalysis()\
+    .read_file("./resources/Teritorial.csv", index_col=0)\
+    .run_hca(method=2, metric=1, partition_type="arbitrary", no_groups=1)\
+    .visualise()\
+    .get_results()
+```
+or 
+```python
+hca_results2 = dl.Datalysis()\
+    .read_file("./resources/Teritorial.csv", index_col=0)\
+    .run_hca(method=1, metric=1, partition_type="optimal")\
+    .visualise()\
+    .get_results()
+```
 
 ## Notes
 ### Dependencies
