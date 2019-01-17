@@ -112,6 +112,9 @@ hca_results2 = dl.Datalysis()\
 
 ## Author
 - Kovacs Erik-Robert
+- Ganea Raluca
+- Frentescu Adela
+- Iordache Eduard
 
 ## Credits
 - Prof. Claudiu Vinte
