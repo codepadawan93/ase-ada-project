@@ -21,21 +21,21 @@ efa_results = dl.Datalysis()\
     .read_file(FILE_NAME)\
     .run_efa()\
     .visualise()\
-    .get_results();
+    .get_results()
 
 # print(efa_results)
 
 # Apply CCA
 cca_results = dl.Datalysis()\
-    .read_file(CCA_FILE_NAME, index_col=0)\
-    .run_cca(4,4)\
+    .read_file(CCA_FILE_NAME, index_col=0) \
+    .run_cca(x_mark=4, y_mark=4) \
     .visualise()\
     .get_results()
 
 # Apply LDA
 lda_results = dl.Datalysis()\
-    .read_multiple(LDA_FILE_1, LDA_FILE_2, 0, 0)\
-    .run_lda(6, 11, "VULNERAB")\
+    .read_multiple(LDA_FILE_1, LDA_FILE_2, f1_index_col=0, f2_index_col=0)\
+    .run_lda(categorical_mark=6, predictor_mark=11, predictor_var="VULNERAB")\
     .visualise()\
     .get_results()
 
